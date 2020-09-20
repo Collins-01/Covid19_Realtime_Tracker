@@ -1,9 +1,8 @@
+import 'package:covid19_virus_tracker/Views/about_view.dart';
+import 'package:covid19_virus_tracker/Views/country_view.dart';
 import 'package:covid19_virus_tracker/Views/home_view.dart';
-import 'package:covid19_virus_tracker/Views/information_view.dart';
 import 'package:covid19_virus_tracker/Views/news_view.dart';
-import 'package:covid19_virus_tracker/Views/settings_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -31,62 +30,20 @@ class _HomeLogicState extends State<HomeLogic> {
     });
   }
 
-  // void bottomTapped(int index) {
-  //   setState(() {
-  //     selectedIndex = index;
-  //     pageController.animateToPage(index,
-  //         duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        body: PageView(
+          onPageChanged: (int index) {
+            pageChange(index);
+          },
+          controller: pageController,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 25),
-                  Text(
-                    "Covid-19",
-                    style: GoogleFonts.cabin(
-                        textStyle: TextStyle(
-                      fontSize: 21,
-                      color: Color(0xff989CAC),
-                    )),
-                  ),
-                  SizedBox(height: 15),
-                  Text(
-                    "Tracker",
-                    style: GoogleFonts.cabin(
-                        textStyle: TextStyle(
-                      fontSize: 27,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    )),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-            Expanded(
-              child: PageView(
-                onPageChanged: (int index) {
-                  pageChange(index);
-                },
-                controller: pageController,
-                children: <Widget>[
-                  HomeView(),
-                  NewsView(),
-                  InformationView(),
-                  SettingsView()
-                ],
-              ),
-            )
+            HomeView(),
+            CountryView(),
+            NewsView(),
+            AboutView()
           ],
         ),
         bottomNavigationBar: Container(
@@ -113,17 +70,17 @@ class _HomeLogicState extends State<HomeLogic> {
                 ),
                 GButton(
                     icon: LineIcons.newspaper_o,
-                    text: "News",
-                    backgroundColor: Colors.cyan),
+                    text: "Country",
+                    backgroundColor: Colors.green),
                 GButton(
                   icon: LineIcons.list_ul,
-                  text: "Guides",
-                  backgroundColor: Colors.green,
+                  text: "News",
+                  backgroundColor: Colors.cyan,
                 ),
                 GButton(
-                  icon: LineIcons.cog,
-                  text: "Setttings",
-                  backgroundColor: Colors.green,
+                  icon: LineIcons.question,
+                  text: "About",
+                  backgroundColor: Colors.amber,
                 ),
               ],
               selectedIndex: selectedIndex,
@@ -141,3 +98,30 @@ class _HomeLogicState extends State<HomeLogic> {
 }
 
 mixin FrameCallBack {}
+//  Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 30),
+//               child: Column(
+//                 children: <Widget>[
+//                   SizedBox(height: 25),
+//                   Text(
+//                     "Covid-19",
+//                     style: GoogleFonts.cabin(
+//                         textStyle: TextStyle(
+//                       fontSize: 21,
+//                       color: Color(0xff989CAC),
+//                     )),
+//                   ),
+//                   SizedBox(height: 15),
+//                   Text(
+//                     "Tracker",
+//                     style: GoogleFonts.cabin(
+//                         textStyle: TextStyle(
+//                       fontSize: 27,
+//                       color: Colors.black,
+//                       fontWeight: FontWeight.bold,
+//                     )),
+//                   ),
+//                   SizedBox(height: 20),
+//                 ],
+//               ),
+//             ),

@@ -23,11 +23,6 @@ Icon showGrowthIcon(int newCases, int existingCases) {
   return icon;
 }
 
-Color showGrowthColor(int newCases, int existingCases) {
-  // Color color=Colors.
-  if (newCases > existingCases) {}
-}
-
 // Percentage Change
 // Percentage
 // Percentage Change ==((Existing-new)/Existing)*100

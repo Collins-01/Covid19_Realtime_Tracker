@@ -1,13 +1,11 @@
 import 'package:covid19_virus_tracker/Services/Api/api_client.dart';
 import 'package:covid19_virus_tracker/Services/Notifiers/Api_Notifier.dart';
-import 'package:covid19_virus_tracker/Theme/theme_data.dart';
 import 'package:covid19_virus_tracker/Views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  // ApiClient().fetchCurrentNews();
-  ApiClient().getAllCountryData();
+  ApiClient().fetchCountryCases();
 
   runApp(
     MultiProvider(
@@ -24,8 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
+      color: Colors.pink,
+      title: 'Wear Of Covid19',
+      // theme: AppTheme.lightTheme,
+
       home: SplashScreen(),
     );
   }

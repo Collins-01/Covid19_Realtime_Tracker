@@ -1,4 +1,4 @@
-import 'package:covid19_virus_tracker/Models/general_data_model.dart';
+import 'package:covid19_virus_tracker/Models/global_cases.dart';
 import 'package:covid19_virus_tracker/Services/Notifiers/Api_Notifier.dart';
 import 'package:covid19_virus_tracker/Theme/colors.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/covid_card.dart';
@@ -11,21 +11,21 @@ class HomeViewViewModel extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
-  Future<GeneralDataModel> onRefresh() async {
+  Future<GlobalCases> onRefresh() async {
     _loading = true;
     notifyListeners();
-    var refreshed = await _apiNotifier.getAllCountryData();
+    var refreshed = await _apiNotifier.fetchGlobalCases();
     _loading = false;
     notifyListeners();
     return refreshed;
   }
 
   Widget buildHomePageBody() {
-    return FutureBuilder(
-        future: _apiNotifier.getAllCountryData(),
+    return FutureBuilder<GlobalCases>(
+        future: _apiNotifier.fetchGlobalCases(),
         builder:
             // ignore: missing_return
-            (BuildContext context, AsyncSnapshot<GeneralDataModel> snapshot) {
+            (BuildContext context, AsyncSnapshot<GlobalCases> snapshot) {
           if (snapshot.hasError) {
             return Error(
               title:
@@ -56,15 +56,13 @@ class HomeViewViewModel extends ChangeNotifier {
               children: <Widget>[
                 GlobalSituationCard(
                   cardColor: CardColors.green,
-                  icon: Icon(Icons.arrow_upward),
                   cardTitle: "Total Cases",
                   caseTitle: "Total",
-                  currentData: snapshot.data.results[0].totalCases,
+                  currentData: snapshot.data.totalConfirmed,
                   color: Colors.red,
-                  newData: snapshot.data.results[0].totalNewCasesToday,
-                  percentChange: ((snapshot.data.results[0].totalCases -
-                              snapshot.data.results[0].totalNewCasesToday) /
-                          snapshot.data.results[0].totalCases) *
+                  newData: snapshot.data.newConfirmed,
+                  percentChange: (snapshot.data.newConfirmed /
+                          snapshot.data.totalConfirmed) *
                       100,
                 ),
                 SizedBox(height: 15),
@@ -72,17 +70,12 @@ class HomeViewViewModel extends ChangeNotifier {
                   cardTitle: "Recovered Cases",
                   caseTitle: "Recovered",
                   color: Colors.green,
-                  currentData: snapshot.data.results[0].totalRecovered,
+                  currentData: snapshot.data.totalRecovered,
                   // newData:    data.total,
                   cardColor: CardColors.blue,
-                  icon: Icon(Icons.arrow_drop_down),
-                  newData: (snapshot.data.results[0].totalNewCasesToday -
-                      snapshot.data.results[0].totalNewDeathsToday),
-                  percentChange: ((snapshot.data.results[0].totalRecovered -
-                              (snapshot.data.results[0].totalNewCasesToday -
-                                  snapshot
-                                      .data.results[0].totalNewDeathsToday)) /
-                          snapshot.data.results[0].totalRecovered) *
+                  newData: snapshot.data.newRecovered,
+                  percentChange: (snapshot.data.newRecovered /
+                          snapshot.data.totalRecovered) *
                       100,
                 ),
                 SizedBox(height: 15),
@@ -90,33 +83,14 @@ class HomeViewViewModel extends ChangeNotifier {
                   cardTitle: "Deaths Cases",
                   caseTitle: "Deaths",
                   color: Colors.red,
-                  currentData: snapshot.data.results[0].totalDeaths,
-                  newData: snapshot.data.results[0].totalNewDeathsToday,
-                  percentChange: ((snapshot.data.results[0].totalDeaths -
-                              snapshot.data.results[0].totalNewDeathsToday) /
-                          snapshot.data.results[0].totalDeaths) *
-                      100,
+                  currentData: snapshot.data.totalDeaths,
+                  newData: snapshot.data.newDeaths,
+                  percentChange:
+                      (snapshot.data.newDeaths / snapshot.data.totalDeaths) *
+                          100,
                   cardColor: CardColors.red,
-                  icon: Icon(Icons.arrow_upward),
                 ),
                 SizedBox(height: 15),
-                GlobalSituationCard(
-                  cardTitle: "Serious Cases",
-                  caseTitle: "Serious",
-                  color: Colors.green,
-                  currentData: snapshot.data.results[0].totalUnresolved,
-                  // newData:    data.total,
-                  cardColor: CardColors.cyan,
-                  icon: Icon(Icons.arrow_upward),
-                  newData: (snapshot.data.results[0].totalNewCasesToday -
-                      snapshot.data.results[0].totalNewDeathsToday),
-                  percentChange: ((snapshot.data.results[0].totalRecovered -
-                              (snapshot.data.results[0].totalNewCasesToday -
-                                  snapshot
-                                      .data.results[0].totalNewDeathsToday)) /
-                          snapshot.data.results[0].totalRecovered) *
-                      100,
-                ),
                 SizedBox(height: 15),
               ],
             ),
@@ -124,72 +98,3 @@ class HomeViewViewModel extends ChangeNotifier {
         });
   }
 }
-
-//
-//  if (snapshot.hasData) {
-//             final data = snapshot.data.results[0];
-// return SingleChildScrollView(
-//   child: Column(
-//     children: <Widget>[
-//       GlobalSituationCard(
-//         cardColor: CardColors.green,
-//         icon: Icon(Icons.arrow_upward),
-//         cardTitle: "Total Cases",
-//         caseTitle: "Total",
-//         currentData: data.totalCases,
-//         color: Colors.red,
-//         newData: data.totalNewCasesToday,
-//         percentChange:
-//             ((data.totalCases - data.totalNewCasesToday) /
-//                     data.totalCases) *
-//                 100,
-//       ),
-//       GlobalSituationCard(
-//         cardTitle: "Recovered Cases",
-//         caseTitle: "Recovered",
-//         color: Colors.green,
-//         currentData: data.totalRecovered,
-//         // newData:    data.total,
-//         cardColor: CardColors.blue,
-//         icon: Icon(Icons.arrow_drop_down),
-//         newData:
-//             (data.totalNewCasesToday - data.totalNewDeathsToday),
-//         percentChange: ((data.totalRecovered -
-//                     (data.totalNewCasesToday -
-//                         data.totalNewDeathsToday)) /
-//                 data.totalRecovered) *
-//             100,
-//       ),
-//       GlobalSituationCard(
-//         cardTitle: "Deaths Cases",
-//         caseTitle: "Deaths",
-//         color: Colors.red,
-//         currentData: data.totalDeaths,
-//         newData: data.totalNewDeathsToday,
-//         percentChange:
-//             ((data.totalDeaths - data.totalNewDeathsToday) /
-//                     data.totalDeaths) *
-//                 100,
-//         cardColor: CardColors.red,
-//         icon: Icon(Icons.arrow_upward),
-//       ),
-//       GlobalSituationCard(
-//         cardTitle: "Serious Cases",
-//         caseTitle: "Serious",
-//         color: Colors.green,
-//         currentData: data.totalRecovered,
-//         // newData:    data.total,
-//         cardColor: CardColors.cyan,
-//         icon: Icon(Icons.arrow_upward),
-//         newData:
-//             (data.totalNewCasesToday - data.totalNewDeathsToday),
-//         percentChange: ((data.totalRecovered -
-//                     (data.totalNewCasesToday -
-//                         data.totalNewDeathsToday)) /
-//                 data.totalRecovered) *
-//             100,
-//       ),
-//     ],
-//   ),
-// );
-//           }

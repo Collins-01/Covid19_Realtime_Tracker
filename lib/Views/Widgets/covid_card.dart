@@ -10,7 +10,6 @@ class GlobalSituationCard extends StatelessWidget {
   final int currentData;
   final int newData;
   final double percentChange;
-  final Icon icon;
   final Color color;
   final Color cardColor;
 
@@ -21,7 +20,6 @@ class GlobalSituationCard extends StatelessWidget {
       @required this.currentData,
       @required this.newData,
       @required this.percentChange,
-      this.icon,
       this.cardColor = CardColors.green,
       @required this.color})
       : super(key: key);
@@ -114,32 +112,32 @@ class GlobalSituationCard extends StatelessWidget {
                             ],
                           ),
                           Spacer(),
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: <Widget>[
-                          //     Text(
-                          //       newData != null
-                          //           ? formatter.format(newData)
-                          //           : '-',
-                          //       style: GoogleFonts.cabin(
-                          //         textStyle: TextStyle(
-                          //             color: Colors.white,
-                          //             fontWeight: FontWeight.w500,
-                          //             fontSize: 29),
-                          //       ),
-                          //     ),
-                          //     const SizedBox(height: 5),
-                          //     // Text(
-                          //     //   "New",
-                          //     //   style: GoogleFonts.cabin(
-                          //     //     textStyle: TextStyle(
-                          //     //         color: Colors.white54,
-                          //     //         fontWeight: FontWeight.w300,
-                          //     //         fontSize: 17),
-                          //     //   ),
-                          //     // ),
-                          //   ],
-                          // ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                newData != null
+                                    ? formatter.format(newData)
+                                    : '-',
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 29),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                "New",
+                                style: GoogleFonts.cabin(
+                                  textStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
                           Spacer(),
                         ],
                       ),
@@ -150,48 +148,47 @@ class GlobalSituationCard extends StatelessWidget {
             ],
           ),
         ),
-        // Align(
-        //   alignment: Alignment.bottomRight,
-        //   child: Column(
-        //     children: <Widget>[
-        //       const SizedBox(height: 115),
-        //       Container(
-        //         width: 58,
-        //         height: 58,
-        //         margin: EdgeInsets.all(25),
-        //         decoration: BoxDecoration(
-        //           color: Colors.white,
-        //           borderRadius: BorderRadius.only(
-        //               topLeft: Radius.circular(10),
-        //               bottomLeft: Radius.circular(10),
-        //               bottomRight: Radius.circular(10)),
-        //           boxShadow: [
-        //             BoxShadow(
-        //                 color: Colors.black.withOpacity(0.15),
-        //                 blurRadius: 30,
-        //                 spreadRadius: 3.5,
-        //                 offset: Offset(0, 13)),
-        //           ],
-        //         ),
-        //         child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           children: <Widget>[
-        //             Icon(icon.icon, color: icon.color, size: 15),
-        //             Text(
-        //               "${percentChange.round()}%",
-        //               style: GoogleFonts.cabin(
-        //                 textStyle: TextStyle(
-        //                     color: color,
-        //                     fontWeight: FontWeight.w300,
-        //                     fontSize: 13),
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // )
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 115),
+              Container(
+                width: 58,
+                height: 58,
+                margin: EdgeInsets.all(25),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 30,
+                        spreadRadius: 3.5,
+                        offset: Offset(0, 13)),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "${percentChange.round()}%",
+                      style: GoogleFonts.cabin(
+                        textStyle: TextStyle(
+                            color: color,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

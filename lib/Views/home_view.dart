@@ -1,6 +1,7 @@
 import 'package:covid19_virus_tracker/ViewModels/home_view_view_model.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
@@ -16,10 +17,24 @@ class HomeView extends StatelessWidget {
               ? Loading()
               : SafeArea(
                   child: Scaffold(
-                    body: Container(
-                      child: model.buildHomePageBody(),
-                    ),
-                  ),
+                      appBar: AppBar(
+                        backgroundColor: Colors.pink,
+                        centerTitle: true,
+                        title: Text(
+                          "Covid19 Tracker",
+                          style: GoogleFonts.grenze(),
+                        ),
+                      ),
+                      body: Column(
+                        children: <Widget>[
+                          SizedBox(height: 40),
+                          Expanded(
+                            child: Container(
+                              child: model.buildHomePageBody(),
+                            ),
+                          )
+                        ],
+                      )),
                 ),
         );
       },

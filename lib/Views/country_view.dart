@@ -1,4 +1,4 @@
-import 'package:covid19_virus_tracker/Models/kmodel.dart';
+import 'package:covid19_virus_tracker/Models/country_model.dart';
 import 'package:covid19_virus_tracker/Services/Notifiers/Api_Notifier.dart';
 import 'package:covid19_virus_tracker/ViewModels/country_view_model.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/country_card.dart';

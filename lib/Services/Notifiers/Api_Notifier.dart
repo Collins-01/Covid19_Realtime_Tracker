@@ -1,5 +1,5 @@
 import 'package:covid19_virus_tracker/Models/global_cases.dart';
-import 'package:covid19_virus_tracker/Models/kmodel.dart';
+import 'package:covid19_virus_tracker/Models/country_model.dart';
 import 'package:covid19_virus_tracker/Models/news_model.dart';
 import 'package:covid19_virus_tracker/Services/Api/api_client.dart';
 import 'package:flutter/cupertino.dart';

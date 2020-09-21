@@ -4,7 +4,6 @@ import 'package:covid19_virus_tracker/Theme/colors.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/covid_card.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:covid19_virus_tracker/Views/Widgets/error_widget.dart';
 
 class HomeViewViewModel extends ChangeNotifier {
   ApiNotifier _apiNotifier = new ApiNotifier();
@@ -27,13 +26,7 @@ class HomeViewViewModel extends ChangeNotifier {
             // ignore: missing_return
             (BuildContext context, AsyncSnapshot<GlobalCases> snapshot) {
           if (snapshot.hasError) {
-            return Error(
-              title:
-                  "An Error Occured While Loading\n Check Your Internet Connections",
-              function: () async {
-                await onRefresh();
-              },
-            );
+            return Loading();
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Loading();
@@ -42,13 +35,7 @@ class HomeViewViewModel extends ChangeNotifier {
             return Loading();
           }
           if (snapshot.connectionState == ConnectionState.none) {
-            return Error(
-              title:
-                  "An Error Occured While Loading\n Check Your Internet Connections",
-              function: () async {
-                await onRefresh();
-              },
-            );
+            return Loading();
           }
 
           return SingleChildScrollView(

@@ -3,7 +3,6 @@ import 'package:covid19_virus_tracker/Services/Notifiers/Api_Notifier.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/loading.dart';
 import 'package:covid19_virus_tracker/Views/Widgets/news_card.dart';
 import 'package:flutter/material.dart';
-import 'package:covid19_virus_tracker/Views/Widgets/error_widget.dart';
 
 class NewsViewModel extends ChangeNotifier {
   ApiNotifier _apiNotifier = new ApiNotifier();
@@ -25,13 +24,7 @@ class NewsViewModel extends ChangeNotifier {
         future: _apiNotifier.fetchCurrentNews(),
         builder: (BuildContext context, AsyncSnapshot<NewsModel> snapshot) {
           if (snapshot.hasError) {
-            return Error(
-              title:
-                  "An Error Occured While Loading\n Check Your Internet Connections",
-              function: () async {
-                await fetchCurrentNews();
-              },
-            );
+            return Loading();
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Loading();
@@ -40,13 +33,7 @@ class NewsViewModel extends ChangeNotifier {
             return Loading();
           }
           if (snapshot.connectionState == ConnectionState.none) {
-            return Error(
-              title:
-                  "An Error Occured While Loading\n Check Your Internet Connections",
-              function: () async {
-                await fetchCurrentNews();
-              },
-            );
+            return Loading();
           }
           return snapshot.data == null
               ? Loading()
